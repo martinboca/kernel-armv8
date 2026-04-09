@@ -352,9 +352,6 @@ llvm-objdump -t kernel.elf | grep bss
 
 ## 6. Lo que queda preparado para L05
 
-Después de esta lección, el kernel tiene todo lo que necesita para
-recibir código de alto nivel:
-
 - ✅ Stack pointer válido desde el primer instante de `kmain`.
 - ✅ `.bss` puesta a cero antes de que corra cualquier código que la use.
 - ✅ `kmain` definida como una función `-> !` en términos de contrato
