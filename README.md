@@ -40,7 +40,7 @@ Todo corre en macOS Apple Silicon con herramientas de Homebrew:
 
 - **clang** como assembler cross, usando
   `--target=aarch64-none-elf`.
-- **lld** (`ld.lld`) como linker.
+- **lld** como linker.
 - **qemu** (`qemu-system-aarch64`) como emulador.
 - **rustc** (vía `rustup`) con el target `aarch64-unknown-none` instalado
   (`rustup target add aarch64-unknown-none`).
