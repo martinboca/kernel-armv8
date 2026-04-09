@@ -1,10 +1,9 @@
-# Kernel ARMv8-A — Proyecto de aprendizaje
+# Kernel ARMv8-A
 
-Repositorio pedagógico donde voy construyendo, paso a paso, un kernel para la
-arquitectura **ARMv8-A**, emulado con **QEMU**. El objetivo no es construir un
-producto utilizable, sino entender la arquitectura en profundidad: desde
-imprimir bytes por un UART en assembler hasta, eventualmente, arrancar Rust
-sobre una MMU configurada a mano.
+Repositorio donde voy construyendo, paso a paso, un kernel para la
+arquitectura **ARMv8-A**, emulado con **QEMU**. El objetivo es entender
+la arquitectura en profundidad: desde imprimir bytes por un UART en assembler
+hasta, eventualmente, arrancar Rust sobre una MMU configurada a mano.
 
 ## Estructura
 
@@ -29,33 +28,22 @@ En [iterations/](iterations/) se guarda una copia congelada del estado del
 proyecto al final de cada lección, junto con su documento explicativo,
 para poder seguir la evolución del proyecto paso a paso.
 
-- [iterations/01-hello-world/](iterations/01-hello-world/) — estado al final
-  de la lección 01.
-- [iterations/02-functions/](iterations/02-functions/) — estado al final
-  de la lección 02.
-- [iterations/03-kmain/](iterations/03-kmain/) — estado al final
-  de la lección 03.
-- [iterations/04-bss/](iterations/04-bss/) — estado al final
-  de la lección 04.
-- [iterations/05-hello-rust/](iterations/05-hello-rust/) — estado al final
-  de la lección 05.
+- [iterations/01-hello-world/](iterations/01-hello-world/) — hello en assembly.
+- [iterations/02-functions/](iterations/02-functions/) — funciones en assembly.
+- [iterations/03-kmain/](iterations/03-kmain/) — kmain en assembly.
+- [iterations/04-bss/](iterations/04-bss/) — inicializar bss en assembly.
+- [iterations/05-hello-rust/](iterations/05-hello-rust/) — hello en Rust.
 
 ## Toolchain
 
 Todo corre en macOS Apple Silicon con herramientas de Homebrew:
 
-- **clang** (Apple clang alcanza) como assembler cross, usando
+- **clang** como assembler cross, usando
   `--target=aarch64-none-elf`.
-- **lld** (`ld.lld`) como linker. El `ld` de Apple solo produce Mach-O; para
-  generar un ELF bare-metal necesitamos lld.
+- **lld** (`ld.lld`) como linker.
 - **qemu** (`qemu-system-aarch64`) como emulador.
 - **rustc** (vía `rustup`) con el target `aarch64-unknown-none` instalado
-  (`rustup target add aarch64-unknown-none`). Tier 2, trae `core`
-  precompilada, así que no hace falta `build-std` ni nightly.
-
-No hace falta un toolchain dedicado tipo `aarch64-elf-gcc`: clang puede
-emitir código para cualquier target ARM de una sola instalación, y lld se
-encarga del linking ELF.
+  (`rustup target add aarch64-unknown-none`).
 
 ## Build & Run
 
@@ -72,7 +60,7 @@ Para salir de QEMU (`-nographic`): **Ctrl-A** seguido de **X**.
 
 - **Máquina QEMU**: `virt`. Es un board sintético pensado específicamente
   para virtualización y desarrollo; su memory map está documentado y es
-  estable entre versiones de QEMU. No emula hardware "real" con cuirks.
+  estable entre versiones de QEMU.
 - **CPU**: `cortex-a72`. Un core ARMv8-A bien conocido (Raspberry Pi 4).
 - **Load address**: `0x40080000`. Convención heredada del protocolo de boot
   de Linux arm64: RAM comienza en `0x40000000` en `virt`, y el kernel se
@@ -83,7 +71,7 @@ Para salir de QEMU (`-nographic`): **Ctrl-A** seguido de **X**.
 
 ## Referencias consultadas
 
-Las specs y recursos que fui usando los voy acumulando acá para referencia
+Las specs y recursos que fui usando los dejo acá para referencia
 futura. Cada lección además tiene sus propias referencias específicas.
 
 ### Arquitectura ARMv8-A
