@@ -11,6 +11,7 @@ sobre una MMU configurada a mano.
 | Lección | Archivo | Descripción |
 |---|---|---|
 | 01 | [docs/01-hello-world.md](docs/01-hello-world.md) | Bare-metal assembler que imprime `"Martin Bocanegra"` por el UART PL011 de QEMU `virt`. |
+| 02 | [docs/02-functions.md](docs/02-functions.md) | Refactor a funciones `puts`/`putc`. Introduce `bl`/`ret`, calling convention AAPCS64, stack y prólogo/epílogo. |
 
 ## Archivos del kernel actual
 
@@ -26,6 +27,8 @@ para poder seguir la evolución del proyecto paso a paso.
 
 - [iterations/01-hello-world/](iterations/01-hello-world/) — estado al final
   de la lección 01.
+- [iterations/02-functions/](iterations/02-functions/) — estado al final
+  de la lección 02.
 
 ## Toolchain
 
