@@ -12,6 +12,7 @@ sobre una MMU configurada a mano.
 |---|---|---|
 | 01 | [docs/01-hello-world.md](docs/01-hello-world.md) | Bare-metal assembler que imprime `"Martin Bocanegra"` por el UART PL011 de QEMU `virt`. |
 | 02 | [docs/02-functions.md](docs/02-functions.md) | Refactor a funciones `puts`/`putc`. Introduce `bl`/`ret`, calling convention AAPCS64, stack y prólogo/epílogo. |
+| 03 | [docs/03-kmain.md](docs/03-kmain.md) | Separa `_start` (startup code) de `kmain` (kernel entry point). `b kmain` sin link porque `kmain` nunca retorna. |
 
 ## Archivos del kernel actual
 
@@ -29,6 +30,8 @@ para poder seguir la evolución del proyecto paso a paso.
   de la lección 01.
 - [iterations/02-functions/](iterations/02-functions/) — estado al final
   de la lección 02.
+- [iterations/03-kmain/](iterations/03-kmain/) — estado al final
+  de la lección 03.
 
 ## Toolchain
 
