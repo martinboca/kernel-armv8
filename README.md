@@ -14,11 +14,13 @@ sobre una MMU configurada a mano.
 | 02 | [docs/02-functions.md](docs/02-functions.md) | Refactor a funciones `puts`/`putc`. Introduce `bl`/`ret`, calling convention AAPCS64, stack y prólogo/epílogo. |
 | 03 | [docs/03-kmain.md](docs/03-kmain.md) | Separa `_start` (startup code) de `kmain` (kernel entry point). `b kmain` sin link porque `kmain` nunca retorna. |
 | 04 | [docs/04-bss.md](docs/04-bss.md) | Inicialización de `.bss` en el startup. Introduce el zero register `xzr`, loop de memset en asm, y `SHT_NOBITS` en ELF. Prerrequisito para Rust. |
+| 05 | [docs/05-hello-rust.md](docs/05-hello-rust.md) | Primer código Rust en el kernel: `kmain` pasa a un crate `no_std`/`no_main`, linkeado contra `boot.o`. Introduce `extern "C"`, `#[no_mangle]`, `#[panic_handler]` y `.rodata`. |
 
 ## Archivos del kernel actual
 
-- [boot.S](boot.S) — código de arranque en assembler ARMv8-A.
-- [linker.ld](linker.ld) — linker script que ubica el código en `0x40080000`.
+- [boot.S](boot.S) — startup code y helpers I/O (`puts`/`putc`) en assembler.
+- [kmain.rs](kmain.rs) — entry point del kernel en Rust (`no_std`/`no_main`).
+- [linker.ld](linker.ld) — linker script: `.text`, `.rodata`, `.bss`, stack.
 - [Makefile](Makefile) — build y run con QEMU.
 
 ## Historial de iteraciones
@@ -35,6 +37,8 @@ para poder seguir la evolución del proyecto paso a paso.
   de la lección 03.
 - [iterations/04-bss/](iterations/04-bss/) — estado al final
   de la lección 04.
+- [iterations/05-hello-rust/](iterations/05-hello-rust/) — estado al final
+  de la lección 05.
 
 ## Toolchain
 
@@ -45,6 +49,9 @@ Todo corre en macOS Apple Silicon con herramientas de Homebrew:
 - **lld** (`ld.lld`) como linker. El `ld` de Apple solo produce Mach-O; para
   generar un ELF bare-metal necesitamos lld.
 - **qemu** (`qemu-system-aarch64`) como emulador.
+- **rustc** (vía `rustup`) con el target `aarch64-unknown-none` instalado
+  (`rustup target add aarch64-unknown-none`). Tier 2, trae `core`
+  precompilada, así que no hace falta `build-std` ni nightly.
 
 No hace falta un toolchain dedicado tipo `aarch64-elf-gcc`: clang puede
 emitir código para cualquier target ARM de una sola instalación, y lld se
