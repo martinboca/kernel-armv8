@@ -252,7 +252,7 @@ Esta lección no se ve desde afuera — el output es idéntico al de la 02.
 Pero lo que cambió internamente es lo que nos va a permitir avanzar:
 
 - **`_start` ya está en su versión "final" o casi**. En las próximas
-  lecciones le vamos a agregar el cereado de `.bss` (L04), y después va
+  lecciones le vamos a agregar el seteo a cero de `.bss` (L04), y después va
   a quedar estable. Los cambios sucesivos del kernel van a ocurrir todos
   en `kmain`, no en `_start`.
 
