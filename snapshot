@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+#
+# snapshot — congela el estado actual del kernel como una iteración.
+#
+# Uso:
+#     ./snapshot <numero> <slug>
+#
+# Ejemplo:
+#     ./snapshot 07 puts-rust
+#
+# Crea iterations/07-puts-rust/ y copia adentro los archivos vivos del
+# root (boot.S, kmain.rs, linker.ld, Makefile). No copia docs/ — eso se
+# mantiene aparte. Si el directorio ya existe, aborta para evitar
+# pisar una iteración anterior sin querer.
+
+set -euo pipefail
+
+if [[ $# -ne 2 ]]; then
+    echo "uso: $0 <numero> <slug>" >&2
+    echo "ej:  $0 07 puts-rust" >&2
+    exit 1
+fi
+
+num="$1"
+slug="$2"
+dir="iterations/${num}-${slug}"
+
+if [[ -e "$dir" ]]; then
+    echo "error: $dir ya existe" >&2
+    exit 1
+fi
+
+mkdir -p "$dir"
+cp boot.S kmain.rs linker.ld Makefile "$dir/"
+
+echo "snapshot creada en $dir"
+ls -1 "$dir"
