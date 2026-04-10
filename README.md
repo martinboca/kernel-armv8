@@ -15,6 +15,7 @@ hasta, eventualmente, arrancar Rust sobre una MMU configurada a mano.
 | 04 | [docs/04-bss.md](docs/04-bss.md) | Inicialización de `.bss` en el startup. Introduce el zero register `xzr`, loop de memset en asm, y `SHT_NOBITS` en ELF. Prerrequisito para Rust. |
 | 05 | [docs/05-hello-rust.md](docs/05-hello-rust.md) | Primer código Rust en el kernel: `kmain` pasa a un crate `no_std`/`no_main`, linkeado contra `boot.o`. Introduce `extern "C"`, `#[no_mangle]`, `#[panic_handler]` y `.rodata`. |
 | 06 | [docs/06-putc-rust.md](docs/06-putc-rust.md) | `putc` pasa a Rust con `core::ptr::write_volatile`. Introduce MMIO, por qué `volatile` es necesario, y `-C debug-assertions=off` para evitar las precondition checks de `core`. |
+| 07 | [docs/07-puts-rust.md](docs/07-puts-rust.md) | `puts` pasa a Rust, iterando un `&[u8]`. `boot.S` queda con solo `_start`. `puts`/`putc` dejan de ser símbolos globales y pasan a ser funciones Rust privadas del crate. |
 
 ## Archivos del kernel actual
 
@@ -35,6 +36,7 @@ para poder seguir la evolución del proyecto paso a paso.
 - [iterations/04-bss/](iterations/04-bss/) — inicializar bss en assembly.
 - [iterations/05-hello-rust/](iterations/05-hello-rust/) — hello en Rust.
 - [iterations/06-putc-rust/](iterations/06-putc-rust/) — putc en Rust con MMIO.
+- [iterations/07-puts-rust/](iterations/07-puts-rust/) — puts en Rust, boot.S con solo `_start`.
 
 ## Toolchain
 
