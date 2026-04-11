@@ -1,10 +1,13 @@
 # Lección 08 — Soporte completo de `core` en Rust
 
-**Objetivo**: linkear `libcore.rlib` y `libcompiler_builtins.rlib`
-explícitamente, eliminar el flag `-C debug-assertions=off`, y habilitar
-FP/SIMD en EL1. Después de esta lección, el kernel tiene acceso completo
-a todo `core` de Rust: `fmt::Write`, iteradores, `Option`, `Result`,
-aritmética checked, etc.
+**Objetivo**: tener acceso completo a `core` de Rust para poder usarlo
+sin restricciones en las próximas lecciones (`fmt::Write`, iteradores,
+`Option`, `Result`, aritmética checked, etc.). Para lograrlo necesitamos
+linkear `libcore.rlib` y `libcompiler_builtins.rlib` desde el sysroot
+de rustup, eliminar el workaround `-C debug-assertions=off` que veníamos
+arrastrando desde L06, y habilitar FP/SIMD en EL1 — porque `core` usa
+internamente instrucciones NEON que están deshabilitadas por defecto
+en ARMv8-A.
 
 Archivos:
 [boot.S](../iterations/08-rust-core-support/boot.S),
