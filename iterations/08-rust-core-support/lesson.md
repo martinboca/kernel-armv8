@@ -23,6 +23,9 @@ todo `core` de Rust.
 2. **boot.S** — se agrega habilitación de FP/SIMD al inicio de
    `_start` vía CPACR_EL1.
 
+3. **kmain.rs** — se recupera el Exception Level (EL) actual mediante
+   el registro `CurrentEL` y se lo imprime por UART
+
 ## El bug de NEON
 
 **NEON** (también llamado "Advanced SIMD") es la extensión SIMD de

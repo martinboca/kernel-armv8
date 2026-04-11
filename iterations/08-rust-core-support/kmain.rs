@@ -1,8 +1,7 @@
-//! kmain.rs — Lección 07: puts en Rust
-
 #![no_std]
 #![no_main]
 
+use core::arch::asm;
 use core::panic::PanicInfo;
 use core::ptr::write_volatile;
 
@@ -20,8 +19,42 @@ fn puts(s: &[u8]) {
     }
 }
 
+fn read_el() -> u64 {
+    let el: u64;
+    unsafe {
+        asm!("mrs {0}, CurrentEL", out(reg) el);
+    }
+    el >> 2
+}
+
+fn print_hex(mut n: u64) {
+    if n == 0 {
+        putc(b'0');
+        return;
+    }
+    let mut buf = [0u8; 16];
+    let mut i = 16;
+
+    while n > 0 {
+        i -= 1;
+        let digit = (n % 16) as u8;
+        buf[i] = if digit < 10 {
+            digit + b'0'
+        } else {
+            digit - 10 + b'a'
+        };
+        n /= 16;
+    }
+    puts(&buf[i..]);
+}
+
 #[no_mangle]
 pub extern "C" fn kmain() -> ! {
+    let el = read_el();
+    puts(b"Iniciando en EL");
+    print_hex(el);
+    putc(b'\n');
+
     let msg: &[u8] = b"Martin Bocanegra\n";
     puts(msg);
     loop {}
