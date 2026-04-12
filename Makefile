@@ -14,7 +14,7 @@ LDFLAGS    := -T linker.ld
 QEMU       := qemu-system-aarch64
 QEMU_FLAGS := -machine virt -cpu cortex-a72 -nographic -kernel kernel.elf
 
-.PHONY: all run clean
+.PHONY: all run clean rust-analyzer
 
 all: kernel.elf
 
@@ -30,5 +30,19 @@ kernel.elf: boot.o kmain.o linker.ld
 run: kernel.elf
 	$(QEMU) $(QEMU_FLAGS)
 
+rust-analyzer:
+	@echo "{" > rust-project.json
+	@echo "  \"sysroot_src\": \"$$(rustc --print sysroot)/lib/rustlib/src/rust/library\"," >> rust-project.json
+	@echo "  \"crates\": [" >> rust-project.json
+	@echo "    {" >> rust-project.json
+	@echo "      \"root_module\": \"kmain.rs\"," >> rust-project.json
+	@echo "      \"edition\": \"2021\"," >> rust-project.json
+	@echo "      \"deps\": []," >> rust-project.json
+	@echo "      \"cfg\": [\"no_std\"]" >> rust-project.json
+	@echo "    }" >> rust-project.json
+	@echo "  ]" >> rust-project.json
+	@echo "}" >> rust-project.json
+	@echo "rust-project.json generado. Reiniciá rust-analyzer"
+
 clean:
-	rm -f *.o kernel.elf
+	rm -f *.o kernel.elf rust-project.json
