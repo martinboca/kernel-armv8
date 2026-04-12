@@ -41,15 +41,6 @@ El proyecto avanza por **lecciones**, cada una con su snapshot en
   arranca en EL1 por defecto).
   [docs](docs/08-rust-core-support.md)
 
-### Lo que ya tenemos
-
-- Boot end-to-end: `_start` → setup FP/SIMD → stack → `.bss` zero → `kmain`
-- Rust con `core` completo (`fmt`, `iter`, `Option`, `Result`, etc.)
-- Inline asm para acceso a system registers
-- Output por UART desde Rust
-- Conocimiento de en qué Exception Level arrancamos
-
----
 
 ## Próximas lecciones planeadas (L09–L13)
 
